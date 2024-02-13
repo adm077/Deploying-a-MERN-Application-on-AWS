@@ -16,6 +16,13 @@ Part 1: Infrastructure Setup with Terraform
 1. AWS Setup and Terraform Initialization:
 
    - Configure AWS CLI and authenticate with your AWS account.
+        - Installed the awscli on Ubuntu
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install
+```
 
    - Initialize a new Terraform project targeting AWS.
 
