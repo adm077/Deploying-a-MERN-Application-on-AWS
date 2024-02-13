@@ -1,5 +1,5 @@
 # Deploying-a-MERN-Application-on-AWS
-Deploying a MERN Application on AWS
+Deploying a MERN Application on AWS Using Terraform & Ansible
 
 Objective:
 
