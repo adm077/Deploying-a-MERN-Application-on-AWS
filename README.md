@@ -461,12 +461,15 @@ Part 1: Infrastructure Setup with Terraform
 2. VPC and Network Configuration:
 
    - Create an AWS VPC with two subnets: one public and one private.
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/3616a827-e2d2-4103-83c4-8d3c3abac09f)
 
    - Set up an Internet Gateway and a NAT Gateway.
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/eff5bfac-24f1-4d39-a08f-459e40800dec)
 
    - Configure route tables for both subnets.
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/baff443e-c37e-44e1-b9a7-31871825b3ab)
 
 
@@ -476,6 +479,7 @@ Part 1: Infrastructure Setup with Terraform
 
    - Ensure both instances are accessible via SSH (public instance only accessible from your IP).
 
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/927ee700-1713-436c-93de-f8ec814912b8)
 
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/95fda945-985c-40f4-961b-e4caffffea67)
@@ -484,6 +488,7 @@ Part 1: Infrastructure Setup with Terraform
 4. Security Groups and IAM Roles:
 
    - Create necessary security groups for web and database servers.
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/4064c585-ebee-469e-b511-56246b1e8e3c)
 
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/23765856-71e4-4215-9071-f69b2e7b2d15)
@@ -493,6 +498,7 @@ Part 1: Infrastructure Setup with Terraform
 5. Resource Output:
 
    - Output the public IP of the web server EC2 instance.
+
    ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/8563a21c-f5d0-4a18-ba0f-e1128af66377)
 
 
