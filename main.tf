@@ -183,9 +183,9 @@ resource "aws_iam_policy" "loadbalancer_policy" {
 
 # Displaying the output
 output "israr_terraform_instance_ip" {
-  value = aws_instance.adarsh_terraform.public_ip
+  value = aws_instance.israr_terraform.public_ip
 }
 
 output "israr_database_terraform_instance_ip" {
-  value = aws_instance.adarsh_terraform.public_ip
+  value = aws_instance.israr_terraform.public_ip
 }
