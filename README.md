@@ -74,19 +74,19 @@ Part 1: Infrastructure Setup with Terraform
 
    ```
    israr@LinuxProj-05:~/terraform-aws$ terraform validate
-Success! The configuration is valid.
+   Success! The configuration is valid.
 
-israr@LinuxProj-05:~/terraform-aws$ terraform plan
-data.aws_iam_policy_document.loadbalancer: Reading...
-data.aws_iam_policy_document.loadbalancer: Read complete after 0s [id=2044959750]
+   israr@LinuxProj-05:~/terraform-aws$ terraform plan
+   data.aws_iam_policy_document.loadbalancer: Reading...
+   data.aws_iam_policy_document.loadbalancer: Read complete after 0s [id=2044959750]
 
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-  + create
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+     + create
 
-Terraform will perform the following actions:
+   Terraform will perform the following actions:
 
-  # aws_iam_policy.loadbalancer_policy will be created
-  + resource "aws_iam_policy" "loadbalancer_policy" {
+     # aws_iam_policy.loadbalancer_policy will be created
+     + resource "aws_iam_policy" "loadbalancer_policy" {
       + arn         = (known after apply)
       + id          = (known after apply)
       + name        = "load_balancer_mern"
@@ -137,8 +137,8 @@ Terraform will perform the following actions:
       + tags_all    = (known after apply)
     }
 
-  # aws_instance.israr_database will be created
-  + resource "aws_instance" "israr_database" {
+     # aws_instance.israr_database will be created
+     + resource "aws_instance" "israr_database" {
       + ami                                  = "ami-03f4878755434977f"
       + arn                                  = (known after apply)
       + associate_public_ip_address          = (known after apply)
@@ -188,8 +188,8 @@ Terraform will perform the following actions:
       + vpc_security_group_ids               = (known after apply)
     }
 
-  # aws_instance.israr_terraform will be created
-  + resource "aws_instance" "israr_terraform" {
+     # aws_instance.israr_terraform will be created
+     + resource "aws_instance" "israr_terraform" {
       + ami                                  = "ami-03f4878755434977f"
       + arn                                  = (known after apply)
       + associate_public_ip_address          = (known after apply)
@@ -239,8 +239,8 @@ Terraform will perform the following actions:
       + vpc_security_group_ids               = (known after apply)
     }
 
-  # aws_internet_gateway.gw will be created
-  + resource "aws_internet_gateway" "gw" {
+     # aws_internet_gateway.gw will be created
+     + resource "aws_internet_gateway" "gw" {
       + arn      = (known after apply)
       + id       = (known after apply)
       + owner_id = (known after apply)
@@ -248,8 +248,8 @@ Terraform will perform the following actions:
       + vpc_id   = (known after apply)
     }
 
-  # aws_route_table.private will be created
-  + resource "aws_route_table" "private" {
+     # aws_route_table.private will be created
+     + resource "aws_route_table" "private" {
       + arn              = (known after apply)
       + id               = (known after apply)
       + owner_id         = (known after apply)
@@ -259,8 +259,8 @@ Terraform will perform the following actions:
       + vpc_id           = (known after apply)
     }
 
-  # aws_route_table.public will be created
-  + resource "aws_route_table" "public" {
+     # aws_route_table.public will be created
+     + resource "aws_route_table" "public" {
       + arn              = (known after apply)
       + id               = (known after apply)
       + owner_id         = (known after apply)
@@ -286,22 +286,22 @@ Terraform will perform the following actions:
       + vpc_id           = (known after apply)
     }
 
-  # aws_route_table_association.private will be created
-  + resource "aws_route_table_association" "private" {
+     # aws_route_table_association.private will be created
+     + resource "aws_route_table_association" "private" {
       + id             = (known after apply)
       + route_table_id = (known after apply)
       + subnet_id      = (known after apply)
     }
 
-  # aws_route_table_association.public will be created
-  + resource "aws_route_table_association" "public" {
+     # aws_route_table_association.public will be created
+     + resource "aws_route_table_association" "public" {
       + id             = (known after apply)
       + route_table_id = (known after apply)
       + subnet_id      = (known after apply)
     }
 
-  # aws_security_group.custom_security_group will be created
-  + resource "aws_security_group" "custom_security_group" {
+     # aws_security_group.custom_security_group will be created
+     + resource "aws_security_group" "custom_security_group" {
       + arn                    = (known after apply)
       + description            = "Security group for israr_terraform instance"
       + egress                 = [
@@ -356,8 +356,8 @@ Terraform will perform the following actions:
       + vpc_id                 = (known after apply)
     }
 
-  # aws_security_group.custom_security_group_database will be created
-  + resource "aws_security_group" "custom_security_group_database" {
+     # aws_security_group.custom_security_group_database will be created
+     + resource "aws_security_group" "custom_security_group_database" {
       + arn                    = (known after apply)
       + description            = "Security group for israr_terraform database"
       + egress                 = (known after apply)
@@ -385,8 +385,8 @@ Terraform will perform the following actions:
       + vpc_id                 = (known after apply)
     }
 
-  # aws_subnet.private will be created
-  + resource "aws_subnet" "private" {
+     # aws_subnet.private will be created
+     + resource "aws_subnet" "private" {
       + arn                                            = (known after apply)
       + assign_ipv6_address_on_creation                = false
       + availability_zone                              = "ap-south-1b"
@@ -405,8 +405,8 @@ Terraform will perform the following actions:
       + vpc_id                                         = (known after apply)
     }
 
-  # aws_subnet.public will be created
-  + resource "aws_subnet" "public" {
+     # aws_subnet.public will be created
+     + resource "aws_subnet" "public" {
       + arn                                            = (known after apply)
       + assign_ipv6_address_on_creation                = false
       + availability_zone                              = "ap-south-1a"
@@ -425,8 +425,8 @@ Terraform will perform the following actions:
       + vpc_id                                         = (known after apply)
     }
 
-  # aws_vpc.main will be created
-  + resource "aws_vpc" "main" {
+     # aws_vpc.main will be created
+     + resource "aws_vpc" "main" {
       + arn                                  = (known after apply)
       + cidr_block                           = "172.31.0.0/16"
       + default_network_acl_id               = (known after apply)
@@ -446,16 +446,16 @@ Terraform will perform the following actions:
       + tags_all                             = (known after apply)
     }
 
-Plan: 13 to add, 0 to change, 0 to destroy.
+   Plan: 13 to add, 0 to change, 0 to destroy.
 
-Changes to Outputs:
-  + israr_database_terraform_instance_ip = (known after apply)
-  + israr_terraform_instance_ip          = (known after apply)
+   Changes to Outputs:
+     + israr_database_terraform_instance_ip = (known after apply)
+     + israr_terraform_instance_ip          = (known after apply)
 
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
-israr@LinuxProj-05:~/terraform-aws$
+   Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+   israr@LinuxProj-05:~/terraform-aws$
    ```
 
 2. VPC and Network Configuration:
@@ -483,7 +483,8 @@ israr@LinuxProj-05:~/terraform-aws$
    - Output the public IP of the web server EC2 instance.
 
 
-Part 2: Configuration and Deployment with Ansible
+
+**Part 2: Configuration and Deployment with Ansible**
 
 
 1. Ansible Configuration:
