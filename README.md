@@ -509,6 +509,71 @@ Part 1: Infrastructure Setup with Terraform
 1. Ansible Configuration:
 
    - Configure Ansible to communicate with the AWS EC2 instances.
+   - I have launched an Ec2 instalce for Ansible master & perform below tasks to configure it.
+   ```
+   sudo apt update
+   sudo apt install openssh-server
+   sudo apt install software-properties-common
+   sudo add-apt-repository --yes --update ppa:ansible/ansible
+   sudo apt install ansible
+   ansible --version
+   ```
+
+   ```
+   cd  /etc/ansible/
+   nano hosts
+   #entry  the all worker node
+   #create a group 
+
+   [Demo]
+   172.31.40.147 #private IP of the worker nodes
+   ```
+
+   ```
+   nano ansible.cfg
+   # some basic default values...
+   [default]
+
+   inventory      = /etc/ansible/hosts
+   #library        = /usr/share/my_modules/
+   #module_utils   = /usr/share/my_module_utils/
+   #remote_tmp     = ~/.ansible/tmp
+   #local_tmp      = ~/.ansible/tmp
+   #plugin_filters_cfg = /etc/ansible/plugin_filters.yml
+   #forks          = 5
+   #poll_interval  = 15
+   sudo_user      = root  #Enabled sudo_user
+   #ask_sudo_pass = True
+   #ask_pass      = True
+   #transport      = smart
+   remote_port    = 22   #Enabled 22 port for ssh
+   #module_lang    = C
+   #module_set_locale = False
+
+   # uncomment this to disable SSH key host checking
+   host_key_checking = False
+   ```
+   - Created a root passwd in all worker nodes using "passwd root" & performed below task to access all the worker nodes from Ansible node.
+
+   ```
+    #entry the sshd file
+    nano /etc/ssh/sshd_config
+ 
+    #LoginGraceTime 2m
+    PermitRootLogin yes
+ 
+    # To disable tunneled clear text passwords, change to no here!
+    PasswordAuthentication yes
+   ```
+
+   - After all the confirguration Lets test it.
+
+   ```
+   ansible all -m ping
+   ```
+
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/e1b75160-0ff5-4459-8b42-1e7d78e45d16)
+
 
 2. Web Server Setup:
 
@@ -527,12 +592,130 @@ Part 1: Infrastructure Setup with Terraform
    - Configure environment variables and start the Node.js application.
 
    - Ensure the React frontend communicates with the Express backend.
+  
+   ```
+   - hosts: Demo
+     user: root
+     gather_facts: 'yes'
+     become: 'yes'
+     tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: 'yes'
+    - name: Ansible shell module multiple commands
+      shell: 'curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+    - name: Install Node.js dependencies
+      apt:
+        name: '{{ item }}'
+        state: present
+      loop:
+        - curl
+        - software-properties-common
+        - nodejs
+        - wget
+        - curl
+    - name: Discard local modifications in the destination directory
+      command: git reset --hard HEAD
+      args:
+        chdir: /home/ubuntu/mern/
+      ignore_errors: yes
+    - name: Clone MERN application repository
+      git:
+        repo: 'https://github.com/UnpredictablePrashant/TravelMemory.git'
+        dest: /home/ubuntu/mern
+    - name: Create .env file with MongoDB URI and port
+      ansible.builtin.lineinfile:
+        path: /home/ubuntu/mern/backend/.env
+        line: MONGO_URI= 'mongodb+srv://prashantdey:prashantkrdey@prashantdey.00jtczg.mongodb.net/msmernsample'
+        create: 'yes'
+    - name: Add port to .env file
+      ansible.builtin.lineinfile:
+        path: /home/ubuntu/mern/backend/.env
+        line: PORT=3001
+        insertafter: MONGO_URI='ENTER_YOUR_MONGO_URL'
+    - name: Install dependencies for MERN application backend
+      command: npm install
+      args:
+        chdir: /home/ubuntu/mern/backend
+    - name: Run the MERN application backend
+      command: node index.js
+      args:
+        chdir: /home/ubuntu/mern/backend/
+    - name: Install dependencies for MERN application frontend
+      command: npm install
+      args:
+        chdir: /home/ubuntu/mern/frontend
 
-5. Security Hardening:
+    - name: Configure baseUrl in url.js
+      ansible.builtin.replace:
+        path: /home/ubuntu/mern/frontend/src/url.js
+        regexp: 'export const baseUrl = .*'
+        replace: 'export const baseUrl = "http://localhost:3001"'
+
+    - name: Run the MERN application frontend
+      command: npm start
+      args:
+        chdir: /home/ubuntu/mern/frontend/
+   ```
+
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/14756df3-69bc-4b43-ad5b-8e6b2ce66faf)
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/0b5dd22f-3564-4137-8f43-c5c51ee875a3)
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/559695a4-3d41-4992-adec-4f571bf99dde)
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/0acdbdf7-0b32-45d5-92af-93f19c206713)
+
+
+
+6. Security Hardening:
 
    - Harden the security by configuring firewalls and security groups.
 
    - Implement additional security measures as needed (e.g., SSH key pairs, disabling root login).
+
+   - For connecting ansible to AWS resoucrce we need to install following pacakges on the ansible control node.
+  
+   ```
+   apt install python3-pip
+   pip install awscli 
+   pip install boto
+   pip install boto3
+   pip install bs4
+   ansible-galaxy collection install community.aws
+   ansible-galaxy collection install amazon.aws:==3.3.1 --force
+   ```
+   ```
+   ---
+     - name: Harden security of AWS EC2 instance
+    hosts: localhost
+    gather_facts: yes
+    vars:
+      region: 'ap-south-1'
+    tasks:
+      - name: Create security group
+        ec2_group:
+          name: my-security-group
+          description: Security group for my EC2 instance
+          vpc_id: vpc-0d162cc8011c8aef4
+          region: 'ap-south-1'
+          access_key: your access key
+          secret_key: yout secret access key
+          rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0  # Restrict SSH access to specific IP ranges if possible
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 3000
+              to_port: 3000
+              cidr_ip: 0.0.0.0/0
+          state: present
+   ```
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/170657ff-2299-4dcc-b9af-23e214979e41)
+   ![image](https://github.com/adm077/Deploying-a-MERN-Application-on-AWS/assets/139608052/1d63c21e-fd3e-46b6-8f51-802167f4638e)
+
 
 Deliverables:
 
